@@ -1,0 +1,5 @@
+float main(){
+    int var1;
+    float a;
+    a=1.1;
+}
