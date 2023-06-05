@@ -9,7 +9,6 @@ import Semantico.AnalisadorSemanticoException;
 import Semantico.Tabela;
 import Semantico.Variavel;
 
-
 public class AnalisadorSintatico {
 	private AnalisadorLexico analisadorLexico;
 	private AnalisadorSintaticoException exception;
@@ -26,6 +25,7 @@ public class AnalisadorSintatico {
 		this.analisadorSemanticoException = new AnalisadorSemanticoException();
 		this.tabela = new Tabela();
 	}
+
 	private void nextToken() throws Exception { // ok
 		lookAHead = AnalisadorLexico.nextToken();
 	}
@@ -70,7 +70,7 @@ public class AnalisadorSintatico {
 	}
 
 	private void comando() throws Exception {
-		// <comando>  <comando_basico> | <iteracao> | if "("<expr_relacional>")"
+		// <comando> <comando_basico> | <iteracao> | if "("<expr_relacional>")"
 		// <comando> {else <comando>}?
 
 		if (comandoAuxBasico()) {
@@ -106,10 +106,9 @@ public class AnalisadorSintatico {
 			if (lookAHead.getGramatica() == Gramatica.PALAVRA_RESERVADA_ELSE) {
 				nextToken();
 				System.out.println(label2 + ":");
-			comando();
+				comando();
 			}
-			
-			
+
 		}
 	}
 
@@ -243,20 +242,84 @@ public class AnalisadorSintatico {
 
 	}
 
-	public void parser() { 
+	public void classe() {
+
+		try {
+
+			nextToken();
+
+			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PUBLIC &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PRIVATE) {
+				// exception.IntException(lookAHead); // Criar exception para private e public
+			}
+			nextToken();
+
+			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CLASS) {
+				exception.IntException(lookAHead); // criar excption para classe
+			}
+			nextToken();
+
+			if (lookAHead.getGramatica() != Gramatica.IDENTIFICADOR) {
+				exception.IntException(lookAHead); // criar excption para nome de classe
+			}
+			nextToken();
+
+			if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_ABRECHAVE) {
+				exception.AbreChaveException(lookAHead);
+			}
+			nextToken();
+
+			parser();
+
+			if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_FECHACHAVE) {
+				exception.FechaChaveException(lookAHead);
+			}
+
+			nextToken();
+
+			if (lookAHead.getGramatica() != Gramatica.EOF) {
+				exception.EoFException(lookAHead);
+			} else {
+				System.out.println("COMPILADO COM SUCESSO");
+			}
+			
+
+		}
+
+		catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void parser() {
 		// <programa> / int main() <bloco>
 
 		try {
+
+			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PUBLIC &&
+				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PRIVATE) {
+
+				// exception.IntException(lookAHead); // criar exeption para private ou public
+			}
+			nextToken();
+
+			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_STATIC) {
+
+				// exception.IntException(lookAHead); // criar exeption para private ou public
+			}
 			nextToken();
 
 			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_INT &&
-				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_FLOAT &&
-				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CHAR) {
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_FLOAT &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_DOUBLE &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CHAR) {
 				exception.IntException(lookAHead);
 			}
 			nextToken();
 
-			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_MAIN) {
+			if (lookAHead.getGramatica() != Gramatica.IDENTIFICADOR) {
 				exception.MainException(lookAHead);
 			}
 			nextToken();
@@ -273,25 +336,22 @@ public class AnalisadorSintatico {
 
 			bloco();
 
-			if (lookAHead.getGramatica() != Gramatica.EOF) {
-				exception.EoFException(lookAHead);
-			}
-			else {
-				System.out.println("COMPILADO COM SUCESSO");
-			}
 			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
 	}
 
-	private void bloco() throws Exception { 
-		 //<bloco>  "{" {<decl_var>}* {<comando>}* "}" 
+	private void bloco() throws Exception {
+		// <bloco> "{" {<decl_var>}* {<comando>}* "}"
+
 		if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_ABRECHAVE) {
 			exception.AbreChaveException(lookAHead);
 		}
 		nextToken();
+
 		this.bloco += 1;
 
 		while (declaracaoVariaveisAux()) {
@@ -330,7 +390,6 @@ public class AnalisadorSintatico {
 
 			Variavel operando2 = expressaoAritmeticaAux();
 
-			
 			if (operando1.getTipo().equals(Gramatica.PALAVRA_RESERVADA_INT)) {
 				if (!operando2.getTipo().equals(Gramatica.TIPOINT)
 						&& !operando2.getTipo().equals(Gramatica.PALAVRA_RESERVADA_INT)) {
@@ -350,7 +409,7 @@ public class AnalisadorSintatico {
 					variavel.setLexema(temp);
 
 					System.out.println(operando1.getLexema() + " = " + variavel.getLexema() + "\n");
-				
+
 				} else {
 					System.out.println(operando1.getLexema() + " = " + operando2.getLexema() + "\n");
 				}
@@ -673,7 +732,7 @@ public class AnalisadorSintatico {
 
 	public Variavel termoAux() throws Exception {
 		Variavel operando1 = fator();
-		Token operador = lookAHead; 
+		Token operador = lookAHead;
 		Variavel operando2 = termo();
 		Variavel variavel = null;
 
@@ -765,7 +824,7 @@ public class AnalisadorSintatico {
 		if (lookAHead.getGramatica() == Gramatica.OPERADOR_ARITMETICO_MULTIPLICACAO) {
 			nextToken();
 			Variavel operando1 = termoAux();
-			Token operador = lookAHead; 
+			Token operador = lookAHead;
 			Variavel operando2 = termo();
 
 			if (operando2 != null) {
@@ -852,7 +911,7 @@ public class AnalisadorSintatico {
 		} else if (lookAHead.getGramatica() == Gramatica.OPERADOR_ARITMETICO_DIVISAO) {
 			nextToken();
 			Variavel operando1 = termoAux();
-			Token operador = lookAHead; 
+			Token operador = lookAHead;
 			Variavel operando2 = termo();
 
 			if (operando2 != null) {
@@ -977,7 +1036,7 @@ public class AnalisadorSintatico {
 	}
 
 	public Variavel fator() throws Exception {
-		//<fator> ::= "(" <expr_arit> ")" | <id> | <real> | <inteiro> | <char>
+		// <fator> ::= "(" <expr_arit> ")" | <id> | <real> | <inteiro> | <char>
 
 		if (lookAHead.getGramatica() == Gramatica.CARACTER_ESPECIAL_ABREPARENTESES) {
 			nextToken();
@@ -1018,6 +1077,7 @@ public class AnalisadorSintatico {
 		}
 		return null;
 	}
+
 	public void cast(Variavel variavel) {
 		System.out.println("(Float) " + variavel.getLexema());
 		variavel.setTipo(Gramatica.TIPOFLOAT);
