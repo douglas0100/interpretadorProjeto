@@ -5,75 +5,75 @@ import Lexico.Token;
 public class AnalisadorSintaticoException {
 
 	public void IntException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Declara o int na main homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : Declaracao do int mal formada!");
 	}
 
 	public void MainException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Declara essa main homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : Declaracao da main mal formada!");
 	}
 
 	public void AbreParentesesException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : cade o '(' homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : falta o '(' !");
 	}
 
 	public void FechaParentesesException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Cade o ')' homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : falta o ')' !");
 	}
 
 	public void EoFException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Cade o fim do arquivo homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : falta o fim do arquivo!");
 	}
 
 	public void AbreChaveException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Cade o '{' homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : falta o '{' !");
 	}
 
 	public void FechaChaveException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + " ERRtO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Cade o '}' homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + " ERRtO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : falta o '}' !");
 	}
 
 	public void IdentificadorException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Declara essa variável homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : Declaracao da variavel mal formada!");
 	}
 
 	public void PontoVirgulaException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " :Cade o ';' homi! ");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " :falta o ';' !");
 	}
 
 
 	public void WhileException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Cade o 'while' depois do '}' homi!");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : falta o 'while' depois do '}' !");
 	}
 
 	public void OperadorRelacionalException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Erro na operacao relacional !");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : Erro na operacao relacional!");
 	}
 
 	public void FatorException(Token lookAHead) throws Exception {
-		throw new Exception("\n[ERRO SINTATICO]\n" + "Oxe esquecesse de nada não? " + "ERRO na linha "
-				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\nlogo ali pertinho de: "
-				+ lookAHead.getLexema() + " : Fator invalido !");
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " : Fator invalido!");
 	}
 }
