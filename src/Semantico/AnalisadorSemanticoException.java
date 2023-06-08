@@ -1,7 +1,6 @@
 package Semantico;
 
 import Lexico.Token;
-
 public class AnalisadorSemanticoException {
 
 	public void VariavelDeclaradaException(Token lookAHead) throws Exception {

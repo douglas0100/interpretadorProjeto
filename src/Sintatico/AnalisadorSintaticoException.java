@@ -1,7 +1,6 @@
 package Sintatico;
 
 import Lexico.Token;
-
 public class AnalisadorSintaticoException {
 
 	public void PrivatePublicExcetion(Token lookAHead) throws Exception {

@@ -339,8 +339,6 @@ public class AnalisadorSintatico {
 	}
 
 	public void parser() {
-		// <programa> / int main() <bloco>
-
 		try {
 
 			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PUBLIC &&
