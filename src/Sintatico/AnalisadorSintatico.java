@@ -289,7 +289,7 @@ public class AnalisadorSintatico {
 				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PRIVATE) {
 
 				if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CLASS) {
-					exception.IntException(lookAHead); // Criar exception para private e public
+					exception.PrivatePublicExcetion(lookAHead); // Criar exception para private e public
 				}
 			}
 			else{

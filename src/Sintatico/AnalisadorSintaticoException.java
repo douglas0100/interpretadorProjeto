@@ -4,6 +4,12 @@ import Lexico.Token;
 
 public class AnalisadorSintaticoException {
 
+	public void PrivatePublicExcetion(Token lookAHead) throws Exception {
+		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
+				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "
+				+ lookAHead.getLexema() + " public ou private nao declarados");
+	}
+
 	public void IntException(Token lookAHead) throws Exception {
 		throw new Exception("\n[ERRO SINTATICO]\n" + "ERRO na linha "
 				+ lookAHead.getLinha() + ", coluna " + lookAHead.getColuna() + ",\n ultimo token lido: "

@@ -12,13 +12,5 @@ public class soma
     }
 
 
-    private double soma(int a, int b)
-    {
-        double a;
-        double b;
-        double valor;
-        valor = a + b;
-    }
 
 }
-
