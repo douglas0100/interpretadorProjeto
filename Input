@@ -1,5 +1,8 @@
 public class soma
 {
+    private int name;
+
+    public static double id;
 
     public static int principal()
     {
@@ -9,11 +12,12 @@ public class soma
     }
 
 
-    private static double soma()
+    private double soma(int a, int b)
     {
         double a;
         double b;
-        double soma = a + b;
+        double valor;
+        valor = a + b;
     }
 
 }

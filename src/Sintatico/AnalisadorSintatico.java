@@ -120,6 +120,8 @@ public class AnalisadorSintatico {
 			return true;
 		} else if (lookAHead.getGramatica() == Gramatica.PALAVRA_RESERVADA_CHAR) {
 			return true;
+		} else if (lookAHead.getGramatica() == Gramatica.PALAVRA_RESERVADA_DOUBLE){
+			return true;
 		}
 		return false;
 	}
@@ -163,6 +165,41 @@ public class AnalisadorSintatico {
 			exception.PontoVirgulaException(lookAHead);
 		}
 		nextToken();
+	}
+
+
+	private void declaracaoParametros() throws Exception {
+
+		nextToken();
+
+		if (lookAHead.getGramatica() != Gramatica.IDENTIFICADOR) {
+			exception.IdentificadorException(lookAHead);
+		}
+
+		nextToken();
+
+		if (lookAHead.getGramatica() == Gramatica.CARACTER_ESPECIAL_VIRGULA) {
+			while (lookAHead.getGramatica() == Gramatica.CARACTER_ESPECIAL_VIRGULA) {
+				nextToken();
+
+				if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_INT &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_FLOAT &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_DOUBLE &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CHAR) {
+					exception.IntException(lookAHead);
+				}
+				nextToken();
+
+				if (lookAHead.getGramatica() != Gramatica.IDENTIFICADOR) {
+					exception.IdentificadorException(lookAHead);
+				}
+				nextToken();
+
+			}
+		}
+		if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_FECHAPARENTESES) {
+			exception.PontoVirgulaException(lookAHead);
+		}
 	}
 
 	private boolean iteracaoAux() {
@@ -249,10 +286,15 @@ public class AnalisadorSintatico {
 			nextToken();
 
 			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PUBLIC &&
-					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PRIVATE) {
-				// exception.IntException(lookAHead); // Criar exception para private e public
+				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PRIVATE) {
+
+				if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CLASS) {
+					exception.IntException(lookAHead); // Criar exception para private e public
+				}
 			}
-			nextToken();
+			else{
+				nextToken();
+			}
 
 			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CLASS) {
 				exception.IntException(lookAHead); // criar excption para classe
@@ -269,7 +311,10 @@ public class AnalisadorSintatico {
 			}
 			nextToken();
 
-			parser();
+			while(lookAHead.getGramatica() == Gramatica.PALAVRA_RESERVADA_PUBLIC ||
+				lookAHead.getGramatica() == Gramatica.PALAVRA_RESERVADA_PRIVATE){
+				parser();
+			}
 
 			if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_FECHACHAVE) {
 				exception.FechaChaveException(lookAHead);
@@ -301,20 +346,34 @@ public class AnalisadorSintatico {
 			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PUBLIC &&
 				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_PRIVATE) {
 
-				// exception.IntException(lookAHead); // criar exeption para private ou public
-			}
-			nextToken();
-
-			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_STATIC) {
-
-				// exception.IntException(lookAHead); // criar exeption para private ou public
-			}
-			nextToken();
-
-			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_INT &&
+				if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_INT &&
 					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_FLOAT &&
 					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_DOUBLE &&
 					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CHAR) {
+					exception.IntException(lookAHead);
+				}
+			}
+			else{
+				nextToken();
+			}
+
+			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_STATIC) {
+
+				if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_INT &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_FLOAT &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_DOUBLE &&
+					lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CHAR) {
+					exception.IntException(lookAHead);
+				}
+			}
+			else{
+				nextToken();
+			}
+
+			if (lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_INT &&
+				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_FLOAT &&
+				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_DOUBLE &&
+				lookAHead.getGramatica() != Gramatica.PALAVRA_RESERVADA_CHAR) {
 				exception.IntException(lookAHead);
 			}
 			nextToken();
@@ -325,9 +384,21 @@ public class AnalisadorSintatico {
 			nextToken();
 
 			if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_ABREPARENTESES) {
-				exception.AbreParentesesException(lookAHead);
+
+				if(lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_PONTOVIRGULA){
+					exception.AbreParentesesException(lookAHead);
+				}
+				nextToken();
+				return ;
+
 			}
 			nextToken();
+
+
+			while (declaracaoVariaveisAux()) {
+				declaracaoParametros();
+			}
+
 
 			if (lookAHead.getGramatica() != Gramatica.CARACTER_ESPECIAL_FECHAPARENTESES) {
 				exception.FechaParentesesException(lookAHead);
