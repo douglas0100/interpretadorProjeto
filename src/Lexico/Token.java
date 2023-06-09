@@ -19,7 +19,7 @@ public class Token {
 
 	
 	public int getLinha() {
-		return linha;
+		return linha - 1;
 	}
 
 	public int getColuna() {
